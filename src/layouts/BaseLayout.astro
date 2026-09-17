@@ -1,0 +1,59 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { site } from "../config/site";
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+  transparentHeader?: boolean;
+}
+
+const {
+  title = `${site.name} ${site.signature}`,
+  description = site.description,
+  transparentHeader = false,
+} = Astro.props;
+
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site) : undefined;
+---
+
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#081728" />
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex, nofollow" />
+    {canonical && <link rel="canonical" href={canonical} />}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>{title}</title>
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="it_IT" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BarOrPub",
+      name: `${site.name} ${site.signature}`,
+      telephone: site.phoneHref,
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "Via Emilia Est 93",
+        addressLocality: "Modena",
+        addressCountry: "IT",
+      },
+      hasMap: site.mapUrl,
+    })} />
+  </head>
+  <body class:list={{ "has-transparent-header": transparentHeader }}>
+    <a class="skip-link" href="#main-content">Vai al contenuto</a>
+    <Header transparent={transparentHeader} />
+    <main id="main-content">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

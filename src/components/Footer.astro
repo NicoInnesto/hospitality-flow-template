@@ -1,0 +1,17 @@
+---
+import { navItems, site } from "../config/site";
+---
+
+<footer class="site-footer">
+  <div>
+    <p class="footer-brand">{site.name} <em>{site.signature}</em></p>
+    <p>{site.address}</p>
+  </div>
+  <nav aria-label="Navigazione nel piè di pagina">
+    {navItems.map((item) => <a href={item.href}>{item.label}</a>)}
+  </nav>
+  <div class="footer-meta">
+    <a href={`tel:${site.phoneHref}`}>{site.phoneLabel}</a>
+    <p>{site.notice}</p>
+  </div>
+</footer>

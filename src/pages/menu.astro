@@ -1,0 +1,41 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { menuSections } from "../data/menu";
+import { site } from "../config/site";
+---
+
+<BaseLayout title={`Menu — ${site.name} ${site.signature}`} description="Una selezione di colazioni, proposte salate, aperitivi e drink del Bar Mascagni Panta Rei.">
+  <header class="page-hero">
+    <div class="page-hero__inner">
+      <p class="eyebrow">Dall’apertura all’ultimo bicchiere</p>
+      <h1>Il menu segue il ritmo della giornata.</h1>
+      <p>Una selezione essenziale, pensata per essere aggiornata facilmente con disponibilità, prezzi e allergeni del locale.</p>
+    </div>
+  </header>
+
+  <section class="content-section content-section--cream" aria-labelledby="menu-title">
+    <h2 id="menu-title" class="sr-only">Categorie del menu</h2>
+    <div class="menu-grid">
+      {menuSections.map((section) => (
+        <article class="menu-card">
+          <div class="menu-card__top">
+            <div>
+              <span class="menu-card__number">{section.number}</span>
+              <h3>{section.title}</h3>
+            </div>
+            <p class="menu-card__note">{section.note}</p>
+          </div>
+          <ul>
+            {section.items.map((item) => <li>{item}</li>)}
+          </ul>
+        </article>
+      ))}
+    </div>
+    <p class="menu-disclaimer">Questo è un menu dimostrativo. Prodotti, prezzi, disponibilità e allergeni saranno inseriti dopo il confronto con il locale.</p>
+  </section>
+</BaseLayout>
+
+<style>
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .menu-disclaimer { max-width: 46rem; margin-top: 2rem; color: #53656a; font-size: .9rem; }
+</style>

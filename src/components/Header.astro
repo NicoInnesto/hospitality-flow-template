@@ -1,0 +1,27 @@
+---
+import { navItems, site } from "../config/site";
+
+interface Props {
+  transparent?: boolean;
+}
+
+const { transparent = false } = Astro.props;
+const currentPath = Astro.url.pathname;
+---
+
+<header class:list={["site-header", { "site-header--overlay": transparent }]}>
+  <a class="wordmark" href="/" aria-label={`${site.name} ${site.signature}, home`}>
+    <span>{site.name}</span>
+    <em>{site.signature}</em>
+  </a>
+  <nav class="main-nav" aria-label="Navigazione principale">
+    {
+      navItems.map((item) => (
+        <a href={item.href} aria-current={currentPath === item.href ? "page" : undefined}>
+          {item.label}
+        </a>
+      ))
+    }
+  </nav>
+  <a class="header-call" href={`tel:${site.phoneHref}`}>Chiama</a>
+</header>

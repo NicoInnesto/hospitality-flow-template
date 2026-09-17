@@ -1,0 +1,46 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { site } from "../config/site";
+---
+
+<BaseLayout title={`Orari e contatti — ${site.name} ${site.signature}`} description={`Orari, telefono e indicazioni per raggiungere ${site.name} ${site.signature} a Modena.`}>
+  <div class="contact-layout">
+    <section class="contact-panel contact-panel--dark" aria-labelledby="contact-title">
+      <p class="eyebrow">Passa a trovarci</p>
+      <h1 id="contact-title">Sulla Via Emilia, dalla prima luce.</h1>
+      <dl class="contact-list">
+        <div>
+          <dt>Indirizzo</dt>
+          <dd>{site.address}</dd>
+        </div>
+        <div>
+          <dt>Telefono</dt>
+          <dd><a href={`tel:${site.phoneHref}`}>{site.phoneLabel}</a></dd>
+        </div>
+      </dl>
+      <div class="button-row">
+        <a class="button" href={`tel:${site.phoneHref}`}>Chiama il bar</a>
+        <a class="button" href={site.mapUrl} target="_blank" rel="noreferrer">Apri la mappa</a>
+      </div>
+    </section>
+
+    <section class="contact-panel" aria-labelledby="hours-title">
+      <p class="eyebrow">Orari indicativi</p>
+      <h2 id="hours-title">Quasi sempre aperti.</h2>
+      <dl class="hours-list">
+        {site.hours.map((entry) => (
+          <div>
+            <dt>{entry.days}</dt>
+            <dd>{entry.value}</dd>
+          </div>
+        ))}
+      </dl>
+      <p class="data-note">{site.notice}</p>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .contact-panel h1 { max-width: 10ch; font-size: clamp(3rem, 6.5vw, 6.5rem); }
+  .data-note { margin-top: 2rem; color: #53656a; font-size: .85rem; }
+</style>

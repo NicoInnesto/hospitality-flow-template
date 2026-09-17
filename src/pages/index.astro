@@ -1,0 +1,9 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import HomeExperience from "../components/home/HomeExperience";
+import { site } from "../config/site";
+---
+
+<BaseLayout transparentHeader title={`${site.name} ${site.signature} — Modena`}>
+  <HomeExperience client:load />
+</BaseLayout>

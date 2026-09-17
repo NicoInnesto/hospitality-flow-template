@@ -1,0 +1,31 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { site } from "../config/site";
+---
+
+<BaseLayout title={`Il locale — ${site.name} ${site.signature}`} description="Un piccolo bar di Modena, raccolto e pieno di dettagli, dalla prima colazione alle serate insieme.">
+  <header class="page-hero page-hero--dark">
+    <div class="page-hero__inner">
+      <p class="eyebrow">Un posto fuori dal tempo</p>
+      <h1>Ci sono locali che si guardano. Altri che si ricordano.</h1>
+      <p>Un ambiente raccolto, ricco di oggetti, fotografie e dettagli. La versione definitiva racconterà qui la storia vera del locale e delle persone che lo animano.</p>
+    </div>
+  </header>
+
+  <section class="content-section content-section--cream">
+    <div class="content-grid">
+      <div>
+        <p class="eyebrow">Atmosfera</p>
+        <h2>Ogni parete ha qualcosa da dire.</h2>
+      </div>
+      <div>
+        <p class="content-grid__lead">Il concept visivo privilegia fotografie autentiche, luce naturale e dettagli reali. Le immagini attuali sono segnaposto royalty-free e verranno sostituite con un servizio fotografico del locale.</p>
+      </div>
+    </div>
+    <div class="gallery-grid">
+      <figure><img src="/images/locale.jpg" width="1200" height="1500" loading="lazy" alt="Interno raccolto con quadri e luce calda" /></figure>
+      <figure><img src="/images/colazione.jpg" width="1200" height="900" loading="lazy" alt="Espresso e cornetto serviti al banco" /></figure>
+      <figure><img src="/images/aperitivo.jpg" width="1200" height="900" loading="lazy" alt="Aperitivo in un ambiente dalla luce calda" /></figure>
+    </div>
+  </section>
+</BaseLayout>

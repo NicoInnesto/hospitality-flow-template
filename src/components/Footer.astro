@@ -1,17 +1,24 @@
 ---
-import { navItems, site } from "../config/site";
+import { site } from "../config/site";
 ---
 
 <footer class="site-footer">
-  <div>
-    <p class="footer-brand">{site.name} <em>{site.signature}</em></p>
-    <p>{site.address}</p>
+  <div class="footer-main">
+    <div class="footer-identity">
+      <p class="footer-brand">{site.name} <em>{site.signature}</em></p>
+      <p class="footer-claim">{site.claim}</p>
+    </div>
+    <address>
+      <span>{site.address}</span>
+      <a href={`tel:${site.phoneHref}`}>{site.phoneLabel}</a>
+    </address>
+    <a class="footer-cta" href="/contatti">
+      <span>Contatti e indicazioni</span>
+      <span aria-hidden="true">↗</span>
+    </a>
   </div>
-  <nav aria-label="Navigazione nel piè di pagina">
-    {navItems.map((item) => <a href={item.href}>{item.label}</a>)}
-  </nav>
-  <div class="footer-meta">
-    <a href={`tel:${site.phoneHref}`}>{site.phoneLabel}</a>
+  <div class="footer-bottom">
+    <p>© {new Date().getFullYear()} {site.name} {site.signature}</p>
     <p>{site.notice}</p>
   </div>
 </footer>

@@ -2,9 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import {
   motion,
   MotionConfig,
+  useMotionValue,
   useMotionValueEvent,
   useReducedMotion,
-  useScroll,
   useSpring,
   useTransform,
   type MotionValue,
@@ -18,9 +18,10 @@ type ChapterLayerProps = {
   index: number;
   activeIndex: number;
   progress: MotionValue<number>;
+  reducedMotion: boolean;
 };
 
-function ChapterLayer({ chapter, index, activeIndex, progress }: ChapterLayerProps) {
+function ChapterLayer({ chapter, index, activeIndex, progress, reducedMotion }: ChapterLayerProps) {
   const count = chapters.length;
   const center = index / (count - 1);
   const edge = 0.13;
@@ -29,13 +30,25 @@ function ChapterLayer({ chapter, index, activeIndex, progress }: ChapterLayerPro
     [center - edge, center - edge * 0.45, center, center + edge * 0.45, center + edge],
     [0, 0.25, 1, 0.25, 0],
   );
-  const scale = useTransform(progress, [center - edge, center, center + edge], [0.72, 1, 1.42]);
-  const imageScale = useTransform(progress, [center - edge, center, center + edge], [0.5, 1, 1.8]);
-  const imageY = useTransform(progress, [center - edge, center, center + edge], [110, 0, -90]);
+  const scale = useTransform(
+    progress,
+    [center - edge, center, center + edge],
+    reducedMotion ? [1, 1, 1] : [0.84, 1, 1.2],
+  );
+  const imageScale = useTransform(
+    progress,
+    [center - edge, center, center + edge],
+    reducedMotion ? [1, 1, 1] : [0.76, 1, 1.34],
+  );
+  const imageY = useTransform(
+    progress,
+    [center - edge, center, center + edge],
+    reducedMotion ? [0, 0, 0] : [70, 0, -55],
+  );
   const copyX = useTransform(
     progress,
     [center - edge, center, center + edge],
-    [index % 2 === 0 ? -80 : 80, 0, index % 2 === 0 ? 55 : -55],
+    reducedMotion ? [0, 0, 0] : [index % 2 === 0 ? -56 : 56, 0, index % 2 === 0 ? 36 : -36],
   );
 
   const chapterStyle = {
@@ -76,20 +89,43 @@ function ChapterLayer({ chapter, index, activeIndex, progress }: ChapterLayerPro
 
 export default function HomeExperience() {
   const rootRef = useRef<HTMLDivElement>(null);
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = Boolean(useReducedMotion());
   const [enhanced, setEnhanced] = useState(false);
   const [active, setActive] = useState(0);
-  const { scrollYProgress } = useScroll({
-    target: rootRef,
-    offset: ["start start", "end end"],
-    trackContentSize: true,
-  });
-  const camera = useSpring(scrollYProgress, { stiffness: 95, damping: 24, mass: 0.45 });
+  const scrollProgress = useMotionValue(0);
+  const camera = useSpring(scrollProgress, { stiffness: 95, damping: 26, mass: 0.42 });
   const background = useTransform(camera, chapters.map((_, index) => index / (chapters.length - 1)), chapters.map((chapter) => chapter.background));
 
+  useEffect(() => setEnhanced(true), []);
+
   useEffect(() => {
-    setEnhanced(!reduceMotion);
-  }, [reduceMotion]);
+    if (!enhanced) return;
+
+    let frame = 0;
+    const updateProgress = () => {
+      frame = 0;
+      const root = rootRef.current;
+      if (!root) return;
+
+      const start = root.getBoundingClientRect().top + window.scrollY;
+      const distance = Math.max(root.offsetHeight - window.innerHeight, 1);
+      const next = Math.min(1, Math.max(0, (window.scrollY - start) / distance));
+      scrollProgress.set(next);
+    };
+    const scheduleUpdate = () => {
+      if (!frame) frame = window.requestAnimationFrame(updateProgress);
+    };
+
+    window.addEventListener("scroll", scheduleUpdate, { passive: true });
+    window.addEventListener("resize", scheduleUpdate);
+    frame = window.requestAnimationFrame(updateProgress);
+
+    return () => {
+      window.removeEventListener("scroll", scheduleUpdate);
+      window.removeEventListener("resize", scheduleUpdate);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
+  }, [enhanced, scrollProgress]);
 
   useMotionValueEvent(camera, "change", (value) => {
     const next = Math.min(chapters.length - 1, Math.max(0, Math.round(value * (chapters.length - 1))));
@@ -103,24 +139,35 @@ export default function HomeExperience() {
       document.getElementById(chapters[index]?.id ?? "")?.scrollIntoView({ behavior: "smooth" });
       return;
     }
-    const available = root.offsetHeight - window.innerHeight;
-    window.scrollTo({ top: root.offsetTop + available * (index / (chapters.length - 1)), behavior: "smooth" });
+    const start = root.getBoundingClientRect().top + window.scrollY;
+    const available = Math.max(root.offsetHeight - window.innerHeight, 0);
+    window.scrollTo({
+      top: start + available * (index / (chapters.length - 1)),
+      behavior: reduceMotion ? "auto" : "smooth",
+    });
   }
 
   return (
     <MotionConfig reducedMotion="user">
       <div ref={rootRef} className={`${styles.experience} ${enhanced ? styles.enhanced : ""}`}>
         <motion.div className={styles.stage} style={{ backgroundColor: enhanced ? background : chapters[0]!.background }}>
-          <div className={styles.brandStatement} aria-hidden="true">
-            <span>Bar Mascagni</span>
-            <em>Panta Rei</em>
-          </div>
-
           <div className={styles.chapters}>
             {chapters.map((chapter, index) => (
-              <ChapterLayer key={chapter.id} chapter={chapter} index={index} activeIndex={active} progress={camera} />
+              <ChapterLayer
+                key={chapter.id}
+                chapter={chapter}
+                index={index}
+                activeIndex={active}
+                progress={camera}
+                reducedMotion={reduceMotion}
+              />
             ))}
           </div>
+
+          <p className={styles.timelineMeta} aria-live="polite">
+            <span>{String(active + 1).padStart(2, "0")} / {String(chapters.length).padStart(2, "0")}</span>
+            <strong>{chapters[active]?.eyebrow}</strong>
+          </p>
 
           <nav className={styles.timeline} aria-label="Momenti della giornata">
             <ol>
@@ -130,10 +177,10 @@ export default function HomeExperience() {
                     type="button"
                     className={active === index ? styles.active : ""}
                     aria-current={active === index ? "step" : undefined}
+                    aria-label={`Vai a ${chapter.eyebrow}, ore ${chapter.hour}`}
                     onClick={() => goTo(index)}
                   >
                     <span>{chapter.hour}</span>
-                    <i>{chapter.eyebrow}</i>
                   </button>
                 </li>
               ))}

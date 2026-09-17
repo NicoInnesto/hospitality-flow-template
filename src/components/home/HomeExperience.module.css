@@ -64,9 +64,9 @@
 .actions a { padding: .75rem 1.1rem; border: 1px solid currentColor; border-radius: 999px; text-decoration: none; font-weight: 600; }
 .actions a:first-child { color: #07131e; background: var(--chapter-accent); border-color: var(--chapter-accent); }
 
-.timeline, .brandStatement { display: none; }
+.timeline, .timelineMeta { display: none; }
 
-.enhanced { height: calc(7 * 118svh); }
+.enhanced { height: calc(7 * 116svh); }
 .enhanced .stage {
   position: sticky;
   top: 0;
@@ -79,7 +79,10 @@
   position: absolute;
   z-index: 1;
   inset: 0;
-  background: radial-gradient(circle at 75% 30%, rgba(255,255,255,.12), transparent 34%), radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,.28));
+  background:
+    linear-gradient(180deg, rgba(4, 12, 20, .14), transparent 24%, transparent 70%, rgba(4, 12, 20, .48)),
+    radial-gradient(circle at 72% 30%, rgba(255,255,255,.1), transparent 34%),
+    radial-gradient(ellipse at center, transparent 48%, rgba(0,0,0,.24));
   pointer-events: none;
 }
 .enhanced .chapters { position: absolute; z-index: 2; inset: 0; }
@@ -92,26 +95,13 @@
   pointer-events: none;
 }
 .enhanced .activeChapter { pointer-events: auto; }
-.enhanced .brandStatement {
-  position: absolute;
-  z-index: 5;
-  left: var(--gutter);
-  top: 6.6rem;
-  display: block;
-  font-family: var(--display);
-  line-height: 1;
-  pointer-events: none;
-}
-.brandStatement span, .brandStatement em { display: block; }
-.brandStatement em { margin-top: .2rem; color: #ffc27a; font-size: .8em; }
-
 .enhanced .timeline {
   position: absolute;
   z-index: 6;
   inset: auto var(--gutter) 1.3rem;
   display: block;
 }
-.timeline ol { display: grid; grid-template-columns: repeat(7, 1fr); list-style: none; border-top: 1px solid rgba(255,255,255,.35); }
+.timeline ol { display: grid; grid-template-columns: repeat(7, 1fr); list-style: none; border-top: 1px solid rgba(255,255,255,.24); }
 .timeline li { min-width: 0; }
 .timeline button {
   position: relative;
@@ -124,11 +114,26 @@
   cursor: pointer;
 }
 .timeline button::before { content: ""; position: absolute; top: -4px; left: 0; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
-.timeline button span, .timeline button i { display: block; }
+.timeline button span { display: block; }
 .timeline button span { font-size: .82rem; font-weight: 600; font-variant-numeric: tabular-nums; }
-.timeline button i { overflow: hidden; margin-top: .15rem; font-size: .68rem; font-style: normal; text-overflow: ellipsis; white-space: nowrap; }
 .timeline button.active { color: white; }
 .timeline button.active::before { width: 11px; height: 11px; top: -6px; background: #ffc27a; box-shadow: 0 0 0 5px rgba(255,194,122,.18); }
+
+.enhanced .timelineMeta {
+  position: absolute;
+  z-index: 6;
+  right: var(--gutter);
+  bottom: 4.25rem;
+  display: flex;
+  align-items: baseline;
+  gap: .8rem;
+  color: white;
+  font-size: .68rem;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+.timelineMeta span { color: var(--gold); font-variant-numeric: tabular-nums; }
+.timelineMeta strong { font-weight: 600; }
 
 @keyframes bounce { 50% { transform: translateY(.4rem); } }
 
@@ -144,13 +149,12 @@
   .imageFrame { grid-row: 1; width: min(56vw, 18rem); aspect-ratio: 1 / 1.15; }
   .copy { grid-row: 2; }
   .enhanced { height: calc(7 * 105svh); }
-  .enhanced .brandStatement { top: 5.6rem; font-size: .82rem; }
-  .enhanced .chapter { align-content: center; padding-bottom: 7.2rem; }
+  .enhanced .chapter { align-content: center; padding-top: 8.5rem; padding-bottom: 7.2rem; }
   .enhanced .imageFrame { width: min(48vw, 15rem); }
-  .enhanced .timeline { bottom: 5.7rem; }
+  .enhanced .timeline { inset: auto 1rem 1.1rem; }
+  .enhanced .timelineMeta { right: 1rem; bottom: 3.7rem; }
   .timeline button { padding-inline: 0; }
-  .timeline button i { display: none; }
-  .timeline button span { font-size: .65rem; transform: rotate(-45deg); transform-origin: 0 50%; }
+  .timeline button span { font-size: .58rem; letter-spacing: -.02em; }
   .scrollHint { display: none; }
 }
 

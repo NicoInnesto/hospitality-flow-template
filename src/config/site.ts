@@ -16,9 +16,12 @@ export const site = {
   notice: "Contenuti e orari dimostrativi: da confermare con il locale.",
 } as const;
 
+export const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, "");
+export const withBase = (path: string) => `${baseUrl}${path}`;
+
 export const navItems = [
-  { href: "/", label: "Home" },
-  { href: "/menu", label: "Menu" },
-  { href: "/locale", label: "Il locale" },
-  { href: "/contatti", label: "Contatti" },
+  { href: withBase("/"), label: "Home" },
+  { href: withBase("/menu"), label: "Menu" },
+  { href: withBase("/locale"), label: "Il locale" },
+  { href: withBase("/contatti"), label: "Contatti" },
 ] as const;

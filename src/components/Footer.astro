@@ -1,5 +1,5 @@
 ---
-import { site } from "../config/site";
+import { site, withBase } from "../config/site";
 ---
 
 <footer class="site-footer">
@@ -12,7 +12,7 @@ import { site } from "../config/site";
       <span>{site.address}</span>
       <a href={`tel:${site.phoneHref}`}>{site.phoneLabel}</a>
     </address>
-    <a class="footer-cta" href="/contatti">
+    <a class="footer-cta" href={withBase("/contatti")}>
       <span>Contatti e indicazioni</span>
       <span aria-hidden="true">↗</span>
     </a>

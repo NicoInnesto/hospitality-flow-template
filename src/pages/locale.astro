@@ -13,7 +13,7 @@ import { site } from "../config/site";
       <p>Un ambiente raccolto, ricco di oggetti, fotografie e dettagli. La versione definitiva racconterà qui la storia vera del locale e delle persone che lo animano.</p>
     </div>
     <figure class="venue-hero__image" data-reveal>
-      <img src="/images/locale.jpg" width="1200" height="1500" alt="Interno raccolto con quadri e luce calda" />
+      <img src={`${import.meta.env.BASE_URL}images/locale.jpg`} width="1200" height="1500" alt="Interno raccolto con quadri e luce calda" />
       <figcaption><span>01</span> Dettagli che diventano memoria</figcaption>
     </figure>
   </header>
@@ -29,9 +29,9 @@ import { site } from "../config/site";
       </div>
     </div>
     <div class="gallery-grid">
-      <figure data-reveal><img src="/images/locale.jpg" width="1200" height="1500" loading="lazy" alt="Interno raccolto con quadri e luce calda" /><figcaption>La sala</figcaption></figure>
-      <figure data-reveal><img src="/images/colazione.jpg" width="1200" height="900" loading="lazy" alt="Espresso e cornetto serviti al banco" /><figcaption>Il primo caffè</figcaption></figure>
-      <figure data-reveal><img src="/images/aperitivo.jpg" width="1200" height="900" loading="lazy" alt="Aperitivo in un ambiente dalla luce calda" /><figcaption>La sera</figcaption></figure>
+      <figure data-reveal><img src={`${import.meta.env.BASE_URL}images/locale.jpg`} width="1200" height="1500" loading="lazy" alt="Interno raccolto con quadri e luce calda" /><figcaption>La sala</figcaption></figure>
+      <figure data-reveal><img src={`${import.meta.env.BASE_URL}images/colazione.jpg`} width="1200" height="900" loading="lazy" alt="Espresso e cornetto serviti al banco" /><figcaption>Il primo caffè</figcaption></figure>
+      <figure data-reveal><img src={`${import.meta.env.BASE_URL}images/aperitivo.jpg`} width="1200" height="900" loading="lazy" alt="Aperitivo in un ambiente dalla luce calda" /><figcaption>La sera</figcaption></figure>
     </div>
   </section>
   <section class="venue-values" aria-label="Caratteristiche del locale">

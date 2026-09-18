@@ -1,7 +1,7 @@
 ---
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import { site } from "../config/site";
+import { site, withBase } from "../config/site";
 import "../styles/global.css";
 
 interface Props {
@@ -28,7 +28,7 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site) : undefin
     <meta name="description" content={description} />
     <meta name="robots" content="noindex, nofollow" />
     {canonical && <link rel="canonical" href={canonical} />}
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href={withBase("/favicon.svg")} type="image/svg+xml" />
     <title>{title}</title>
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="it_IT" />

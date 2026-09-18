@@ -11,6 +11,7 @@ import {
   type MotionStyle,
 } from "motion/react";
 import { chapters, type Chapter } from "../../data/chapters";
+import { withBase } from "../../config/site";
 import styles from "./HomeExperience.module.css";
 
 type ChapterLayerProps = {
@@ -74,13 +75,13 @@ function ChapterLayer({ chapter, index, activeIndex, progress, reducedMotion }: 
         {index === 0 && <p className={styles.scrollHint}>Scorri per entrare nella giornata</p>}
         {index === chapters.length - 1 && (
           <div className={styles.actions}>
-            <a href="/menu">Scopri il menu</a>
-            <a href="/contatti">Orari e contatti</a>
+            <a href={withBase("/menu")}>Scopri il menu</a>
+            <a href={withBase("/contatti")}>Orari e contatti</a>
           </div>
         )}
       </motion.div>
       <motion.figure className={styles.imageFrame} style={{ scale: imageScale, y: imageY }}>
-        <img src={chapter.image} alt={chapter.imageAlt} width="1200" height="1500" loading={index === 0 ? "eager" : "lazy"} />
+        <img src={withBase(chapter.image)} alt={chapter.imageAlt} width="1200" height="1500" loading={index === 0 ? "eager" : "lazy"} />
         <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
       </motion.figure>
     </motion.section>

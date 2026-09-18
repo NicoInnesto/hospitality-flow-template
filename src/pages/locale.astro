@@ -1,31 +1,44 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import RevealScript from "../components/RevealScript.astro";
 import { site } from "../config/site";
 ---
 
 <BaseLayout title={`Il locale — ${site.name} ${site.signature}`} description="Un piccolo bar di Modena, raccolto e pieno di dettagli, dalla prima colazione alle serate insieme.">
-  <header class="page-hero page-hero--dark">
-    <div class="page-hero__inner">
+  <div class="venue-page">
+  <header class="venue-hero">
+    <div class="venue-hero__copy" data-reveal>
       <p class="eyebrow">Un posto fuori dal tempo</p>
       <h1>Ci sono locali che si guardano. Altri che si ricordano.</h1>
       <p>Un ambiente raccolto, ricco di oggetti, fotografie e dettagli. La versione definitiva racconterà qui la storia vera del locale e delle persone che lo animano.</p>
     </div>
+    <figure class="venue-hero__image" data-reveal>
+      <img src="/images/locale.jpg" width="1200" height="1500" alt="Interno raccolto con quadri e luce calda" />
+      <figcaption><span>01</span> Dettagli che diventano memoria</figcaption>
+    </figure>
   </header>
 
-  <section class="content-section content-section--cream">
-    <div class="content-grid">
-      <div>
+  <section class="venue-story">
+    <div class="venue-story__intro">
+      <div data-reveal>
         <p class="eyebrow">Atmosfera</p>
         <h2>Ogni parete ha qualcosa da dire.</h2>
       </div>
-      <div>
+      <div data-reveal>
         <p class="content-grid__lead">Il concept visivo privilegia fotografie autentiche, luce naturale e dettagli reali. Le immagini attuali sono segnaposto royalty-free e verranno sostituite con un servizio fotografico del locale.</p>
       </div>
     </div>
     <div class="gallery-grid">
-      <figure><img src="/images/locale.jpg" width="1200" height="1500" loading="lazy" alt="Interno raccolto con quadri e luce calda" /></figure>
-      <figure><img src="/images/colazione.jpg" width="1200" height="900" loading="lazy" alt="Espresso e cornetto serviti al banco" /></figure>
-      <figure><img src="/images/aperitivo.jpg" width="1200" height="900" loading="lazy" alt="Aperitivo in un ambiente dalla luce calda" /></figure>
+      <figure data-reveal><img src="/images/locale.jpg" width="1200" height="1500" loading="lazy" alt="Interno raccolto con quadri e luce calda" /><figcaption>La sala</figcaption></figure>
+      <figure data-reveal><img src="/images/colazione.jpg" width="1200" height="900" loading="lazy" alt="Espresso e cornetto serviti al banco" /><figcaption>Il primo caffè</figcaption></figure>
+      <figure data-reveal><img src="/images/aperitivo.jpg" width="1200" height="900" loading="lazy" alt="Aperitivo in un ambiente dalla luce calda" /><figcaption>La sera</figcaption></figure>
     </div>
   </section>
+  <section class="venue-values" aria-label="Caratteristiche del locale">
+    <p data-reveal><span>01</span><strong>Raccolto</strong>Un luogo a misura di conversazione.</p>
+    <p data-reveal><span>02</span><strong>Autentico</strong>Dettagli veri, senza costruzioni artificiali.</p>
+    <p data-reveal><span>03</span><strong>Vissuto</strong>Dalla colazione fino all’ultimo brindisi.</p>
+  </section>
+  </div>
+  <RevealScript />
 </BaseLayout>

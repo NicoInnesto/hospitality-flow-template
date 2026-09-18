@@ -1,13 +1,19 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import RevealScript from "../components/RevealScript.astro";
 import { site } from "../config/site";
 ---
 
 <BaseLayout title={`Orari e contatti — ${site.name} ${site.signature}`} description={`Orari, telefono e indicazioni per raggiungere ${site.name} ${site.signature} a Modena.`}>
+  <div class="contacts-page">
+  <header class="contacts-heading" data-reveal>
+    <p class="eyebrow">Modena · Via Emilia Est</p>
+    <h1>Un posto facile da trovare.<br /><em>Difficile da lasciare.</em></h1>
+  </header>
   <div class="contact-layout">
-    <section class="contact-panel contact-panel--dark" aria-labelledby="contact-title">
+    <section class="contact-panel contact-panel--dark" aria-labelledby="contact-title" data-reveal>
       <p class="eyebrow">Passa a trovarci</p>
-      <h1 id="contact-title">Sulla Via Emilia, dalla prima luce.</h1>
+      <h2 id="contact-title">Sulla Via Emilia, dalla prima luce.</h2>
       <dl class="contact-list">
         <div>
           <dt>Indirizzo</dt>
@@ -24,7 +30,7 @@ import { site } from "../config/site";
       </div>
     </section>
 
-    <section class="contact-panel" aria-labelledby="hours-title">
+    <section class="contact-panel contact-panel--hours" aria-labelledby="hours-title" data-reveal>
       <p class="eyebrow">Orari indicativi</p>
       <h2 id="hours-title">Quasi sempre aperti.</h2>
       <dl class="hours-list">
@@ -38,9 +44,15 @@ import { site } from "../config/site";
       <p class="data-note">{site.notice}</p>
     </section>
   </div>
+  <a class="map-card" href={site.mapUrl} target="_blank" rel="noreferrer" data-reveal>
+    <span class="map-card__pin" aria-hidden="true"></span>
+    <span class="map-card__copy"><small>Indicazioni</small><strong>Apri la posizione su Google Maps</strong></span>
+    <span class="map-card__arrow" aria-hidden="true">↗</span>
+  </a>
+  </div>
+  <RevealScript />
 </BaseLayout>
 
 <style>
-  .contact-panel h1 { max-width: 10ch; font-size: clamp(3rem, 6.5vw, 6.5rem); }
   .data-note { margin-top: 2rem; color: #53656a; font-size: .85rem; }
 </style>
